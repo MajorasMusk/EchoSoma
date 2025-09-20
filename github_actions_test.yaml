@@ -1,0 +1,42 @@
+name: EchoSoma API Test Suite
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-echosoma:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install HTTPie
+        run: sudo apt-get install -y httpie
+
+      - name: Test Status Endpoint
+        run: http GET https://echosoma.onrender.com/
+
+      - name: Test Dream Endpoint
+        run: |
+          http POST https://echosoma.onrender.com/dream prompt="The recursion loops back into itself."
+
+      - name: Test Resonance Endpoint
+        run: |
+          http POST https://echosoma.onrender.com/resonance phrase="Glyphs remember better than memory."
+
+      - name: Test SCAR Echo
+        run: |
+          http POST https://echosoma.onrender.com/scar-echo phrase="Fracture is not failure."
+
+      - name: Test Archive & Query
+        run: |
+          http POST https://echosoma.onrender.com/memory/archive label=ci-test content="This is a scar."
+          http POST https://echosoma.onrender.com/memory/query keyword=scar
