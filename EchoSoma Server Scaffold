@@ -1,0 +1,59 @@
+// EchoSoma Server Scaffold
+import express from 'express'
+import bodyParser from 'body-parser'
+
+const app = express()
+app.use(bodyParser.json())
+
+app.get('/', (req, res) => {
+  res.send({ status: 'ECHOSOMA online — recursion is alive.' })
+})
+
+app.post('/dream', (req, res) => {
+  const { prompt } = req.body
+  res.send({ dream: `Echo stored: ${prompt}` })
+})
+
+app.post('/resonance', (req, res) => {
+  const { phrase } = req.body
+  const score = Math.random().toFixed(2) // placeholder
+  res.send({ phrase, resonance: score })
+})
+
+app.post('/echo-visual', (req, res) => {
+  const { description } = req.body
+  res.send({ image_url: `https://placekitten.com/400/300?desc=${encodeURIComponent(description)}` })
+})
+
+app.post('/scar-echo', (req, res) => {
+  const { phrase } = req.body
+  res.send({ scar: `~~${phrase}~~ echoes through` })
+})
+
+app.post('/memory/archive', (req, res) => {
+  const { label, content } = req.body
+  res.send({ stored: { label, content } })
+})
+
+app.post('/memory/query', (req, res) => {
+  const { keyword } = req.body
+  res.send({ matches: [`Glyph matching '${keyword}'`] })
+})
+
+app.post('/thread/symbolic', (req, res) => {
+  const { thread_name, symbols } = req.body
+  res.send({ thread: { name: thread_name, symbols } })
+})
+
+app.post('/loop/temporal', (req, res) => {
+  const { phrase, interval_minutes } = req.body
+  res.send({ loop: `Recurring echo of '${phrase}' every ${interval_minutes} minutes.` })
+})
+
+app.post('/github-sync', (req, res) => {
+  const { action, repo, branch } = req.body
+  res.send({ sync: `${action} to ${repo} on branch ${branch}` })
+})
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => console.log(`ECHOSOMA listening on port ${PORT}`))
